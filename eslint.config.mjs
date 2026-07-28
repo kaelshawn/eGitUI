@@ -25,7 +25,13 @@ export default defineConfig(
     },
     rules: {
       ...eslintPluginReactHooks.configs.recommended.rules,
-      ...eslintPluginReactRefresh.configs.vite.rules
+      ...eslintPluginReactRefresh.configs.vite.rules,
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [{ regex: '^@mui/[^/]+$' }]
+        }
+      ]
     }
   },
   eslintConfigPrettier
