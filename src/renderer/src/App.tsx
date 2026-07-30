@@ -1,8 +1,6 @@
-import Button from '@mui/material/Button'
 import { useHomeStore } from './stores'
-import Dialog from '@mui/material/Dialog'
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
+import { Button, ModalDialog } from 'rsuite'
+
 function App(): React.JSX.Element {
   const { createRepDlg, toggleCreateRepDlg } = useHomeStore()
   return (
@@ -20,14 +18,6 @@ function App(): React.JSX.Element {
         <div></div>
       </div>
       <div></div>
-      <Dialog onClose={toggleCreateRepDlg} open={createRepDlg}>
-        <DialogTitle>Create New Repository</DialogTitle>
-        <DialogContent>
-          <form>
-            
-          </form>
-        </DialogContent>
-      </Dialog>
     </div>
   )
 }
