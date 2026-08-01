@@ -1,8 +1,17 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
-const api = {}
+const api = {
+  selectDirectory: () => ipcRenderer.invoke('select-directory'),
+  checkDirectory: (opts: { path: string }) => ipcRenderer.invoke('check-directory', opts),
+  initRepository: (opts: {
+    path: string
+    bare?: boolean
+    createReadme?: boolean
+    initialCommitMessage?: string
+  }) => ipcRenderer.invoke('init-repo', opts)
+}
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
