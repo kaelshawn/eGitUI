@@ -12,6 +12,7 @@ declare global {
         createReadme?: boolean
         initialCommitMessage?: string
       }) => Promise<{ success: boolean; error?: string; hasGit?: boolean }>
+      gitStatus: (args: { path: string }) => Promise<{ hasGit: boolean; error?: string }>
     }
   }
 

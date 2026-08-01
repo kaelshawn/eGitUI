@@ -10,6 +10,21 @@ function App(): React.JSX.Element {
       <Button appearance="primary" onClick={toggleCreateRepDlg}>
         Create New Repository
       </Button>
+      <Button
+        appearance="primary"
+        onClick={() => {
+          window.api
+            .gitStatus({ path: 'D:\\projects\\gitextensions-electron-app' })
+            .then((result) => {
+              console.log('Git status result:', result)
+            })
+            .catch((error) => {
+              console.error('Error getting git status:', error)
+            })
+        }}
+      >
+        Git Status
+      </Button>
 
       <Modal open={createRepDlg} onClose={toggleCreateRepDlg} size="lg" backdrop="static">
         <Modal.Header>

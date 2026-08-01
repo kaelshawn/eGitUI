@@ -10,7 +10,8 @@ const api = {
     bare?: boolean
     createReadme?: boolean
     initialCommitMessage?: string
-  }) => ipcRenderer.invoke('init-repo', opts)
+  }) => ipcRenderer.invoke('init-repo', opts),
+  gitStatus: (opts: { path: string }) => ipcRenderer.invoke('git-status', opts)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
