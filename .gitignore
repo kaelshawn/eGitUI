@@ -7,4 +7,4 @@ out
 .vscode
 .agents
 skills-lock.json
-addons
+addons/*
