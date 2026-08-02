@@ -5,11 +5,10 @@ import { createRequire } from 'module'
 
 export async function getGitStatus(path: string): Promise<{ hasGit: boolean; error?: string }> {
   try {
-    const addonPath = join(app.getAppPath(), is.dev ? 'addons/Release' : 'resources/addons')
-    console.log('addonPath:', addonPath)
+    const addonPath = join(app.getAppPath(), is.dev ? 'addons/bin/Release' : 'resources/addons')
     const require = createRequire(addonPath)
     const gitAddon = require(resolve(addonPath, 'git-helper.node'))
-    const res = gitAddon.default.Hello(path)
+    const res = gitAddon.git_status_api(path)
     console.log('Native addon result:', res)
     return res
   } catch (err) {
