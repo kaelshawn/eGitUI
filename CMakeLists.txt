@@ -70,8 +70,8 @@ RUNTIME DESTINATION "${PROJECT_SOURCE_DIR}/resources/addons/bin"
 )
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy
-    $<TARGET_FILE:${PROJECT_NAME}>                  # 编译生成的源文件路径
-    "${PROJECT_SOURCE_DIR}/resources/addons/"      # 目标存放路径
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${PROJECT_SOURCE_DIR}/addons/bin/Release/"
+    "${PROJECT_SOURCE_DIR}/resources/addons/"
 )
 
