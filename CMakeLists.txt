@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.15)
 cmake_policy(SET CMP0042 NEW)
 set(CMAKE_CXX_STANDARD 17)
 
+if(CMAKE_GENERATOR MATCHES "Visual Studio")
+  set(CMAKE_VS_GLOBALS "VcpkgEnableManifest=true;VcpkgManifestInstall=true")
+endif()
+
 # Name of the project (will be the name of the plugin)
 project(git-helper)
 
@@ -27,6 +31,8 @@ if(WIN32 OR CMAKE_SYSTEM_NAME STREQUAL "Windows")
   endif()
 endif()
 
+find_package(libgit2 CONFIG REQUIRED)
+
 # Essential include files to build a node addon,
 # you should add this line in every CMake.js based project.
 include_directories(${CMAKE_JS_INC})
@@ -44,8 +50,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 
 # Essential library files to link to a node addon,
 # you should add this line in every CMake.js based project.
-target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB})
-
+target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_JS_LIB} libgit2::libgit2package)
 
 # Include N-API wrappers
 execute_process(COMMAND node -p "require('node-addon-api').include"
@@ -57,6 +62,12 @@ string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
 target_include_directories(${PROJECT_NAME} PRIVATE ${NODE_ADDON_API_DIR})
 
 add_definitions(-DNAPI_VERSION=3)
+
+install(TARGETS ${PROJECT_NAME} 
+LIBRARY DESTINATION "${PROJECT_SOURCE_DIR}/resources/addons/lib"
+ARCHIVE DESTINATION "${PROJECT_SOURCE_DIR}/resources/addons/lib"
+RUNTIME DESTINATION "${PROJECT_SOURCE_DIR}/resources/addons/bin"
+)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy

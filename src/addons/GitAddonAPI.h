@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
-
+#include <git2.h>
 using namespace std;
 
 namespace GitAddonAPI

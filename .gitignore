@@ -9,3 +9,4 @@ out
 skills-lock.json
 addons/*
 resources/addons/*
+vcpkg_installed

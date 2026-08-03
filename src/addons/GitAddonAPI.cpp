@@ -3,8 +3,25 @@
 // Working
 std::string GitAddonAPI::git_status_api(string projectDirectory)
 {
-    // acknowledgment
-    return "Stats Generated";
+    string status = "Stats Generated";
+    git_repository *repo = nullptr;
+    int error = git_repository_open(&repo, projectDirectory.c_str());
+
+    if (error == 0)
+    {
+        std::cout << "Successfully opened Git repository!\n";
+        git_repository_free(repo);
+    }
+    else
+    {
+        const git_error *e = git_error_last();
+        std::cerr << "Error opening repo: " << (e ? e->message : "Unknown error") << "\n";
+        status = "Error opening repo: " + string(e ? e->message : "Unknown error");
+    }
+
+    // Clean up library resources
+    git_libgit2_shutdown();
+    return status;
 }
 
 Napi::String GitAddonAPI::git_status_wrapped(const Napi::CallbackInfo &info)
