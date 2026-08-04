@@ -23,6 +23,10 @@ namespace GitAddonAPI
 	*/
 	Napi::String git_status_wrapped(const Napi::CallbackInfo &info);
 
+	std::string git_create_repo(string projectDirectory = "");
+
+	Napi::String git_create_repo_wrapped(const Napi::CallbackInfo &info);
+
 	// Export API
 	Napi::Object Init(Napi::Env env, Napi::Object exports);
 	NODE_API_MODULE(gitaddon, Init)

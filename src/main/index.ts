@@ -5,7 +5,7 @@ import icon from '../../resources/icon.png?asset'
 import Logger from 'electron-log'
 import fs from 'fs'
 import { execFile } from 'child_process'
-import { getGitStatus } from './utils'
+import { createGitRepository } from './utils'
 
 const logger = Logger.scope('main')
 
@@ -151,13 +151,17 @@ app.whenReady().then(() => {
         const bare = Boolean(args.bare)
         const createReadme = Boolean(args.createReadme) && !bare
         const initialCommitMessage = args.initialCommitMessage || 'Initial commit'
+
+        logger.info(`Git repository initialized at ${repoPath}. Bare: ${bare}`)
+
         let stdout = ''
 
         if (bare) {
-          stdout += await execGitCommand(['init', '--bare', repoPath])
+          stdout += await createGitRepository(repoPath)
         } else {
-          stdout += await execGitCommand(['init'], { cwd: repoPath })
+          stdout += await createGitRepository(repoPath)
         }
+        logger.info('Git repository creation stdout:', stdout)
 
         if (createReadme) {
           try {
@@ -182,16 +186,7 @@ app.whenReady().then(() => {
   )
 
   ipcMain.handle('git-status', async (_event, args: { path: string }) => {
-    try {
-      if (!args?.path) {
-        return { hasGit: false, error: 'Path is required.' }
-      }
-      const res = await getGitStatus(args.path)
-      return res
-    } catch (err) {
-      logger.error('git-status error', err)
-      return { hasGit: false, error: (err as GeneralError)?.message ?? String(err) }
-    }
+    logger.info('git-status called with path:', args.path)
   })
 
   createWindow()
