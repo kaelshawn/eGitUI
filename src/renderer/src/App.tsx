@@ -1,30 +1,52 @@
 import { useHomeStore } from './stores'
-import { Button, Modal } from 'rsuite'
+import {
+  Accordion,
+  Button,
+  Col,
+  Divider,
+  Grid,
+  Input,
+  InputGroup,
+  Modal,
+  Row,
+  VStack
+} from 'rsuite'
 import CreateNewRepository from './views/CreateNewRepository'
+import { DecorativeBox } from './components/DecorativeBox'
+import SearchIcon from '@rsuite/icons/Search'
 
 function App(): React.JSX.Element {
   const { createRepDlg, toggleCreateRepDlg } = useHomeStore()
 
   return (
-    <div style={{ padding: 24 }}>
-      <Button appearance="primary" onClick={toggleCreateRepDlg}>
-        Create New Repository
-      </Button>
-      <Button
-        appearance="primary"
-        onClick={() => {
-          window.api
-            .gitStatus({ path: 'D:\\projects\\gitextensions-electron-app' })
-            .then((result) => {
-              console.log('Git status result:', result)
-            })
-            .catch((error) => {
-              console.error('Error getting git status:', error)
-            })
-        }}
-      >
-        Git Status
-      </Button>
+    <Grid fluid className="w-full">
+      <Row className="w-full">
+        <Col span={8}>
+          <VStack>
+            <Button appearance="primary" onClick={toggleCreateRepDlg}>
+              Create New Repository
+            </Button>
+            <Button appearance="primary">Open Repository</Button>
+            <Button appearance="primary">Clone Repository</Button>
+            <Button appearance="primary">Clone Github Repository</Button>
+          </VStack>
+        </Col>
+        <Col span={16}>
+          <DecorativeBox>
+            <VStack divider={<Divider />}>
+              <InputGroup inside>
+                <Input />
+                <InputGroup.Button>
+                  <SearchIcon />
+                </InputGroup.Button>
+              </InputGroup>
+              <Accordion>
+                <Accordion.Panel header="Recent Repositories" defaultExpanded></Accordion.Panel>
+              </Accordion>
+            </VStack>
+          </DecorativeBox>
+        </Col>
+      </Row>
 
       <Modal open={createRepDlg} onClose={toggleCreateRepDlg} size="lg" backdrop="static">
         <Modal.Header>
@@ -34,7 +56,7 @@ function App(): React.JSX.Element {
           <CreateNewRepository />
         </Modal.Body>
       </Modal>
-    </div>
+    </Grid>
   )
 }
 
