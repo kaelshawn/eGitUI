@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell } from 'electron'
+import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import { join } from 'path/win32'
 import icon from '../../../resources/icon.png?asset'
 
@@ -30,15 +30,23 @@ class WindowManager {
       shell.openExternal(details.url)
       return { action: 'deny' }
     })
+
+    ipcMain.on('open-repository', (_event, args: { path: string }) => {
+      if (args?.path) {
+        this.loadPage('repository')
+      } else {
+        this.loadPage('empty')
+      }
+    })
   }
 
-  loadPage(type: 'home' | 'empty' = 'home'): void {
+  async loadPage(type: 'home' | 'empty' | 'repository' = 'home'): Promise<void> {
     if (this._window) {
       const url = new URL(
         `${type}.html`,
         process.env['ELECTRON_RENDERER_URL'] || `file://${join(__dirname, '../renderer/')}`
       )
-      this._window.loadURL(url.href)
+      await this._window.loadURL(url.href)
     }
   }
 

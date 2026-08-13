@@ -16,7 +16,7 @@ import { DecorativeBox } from './components/DecorativeBox'
 import SearchIcon from '@rsuite/icons/Search'
 
 function App(): React.JSX.Element {
-  const { createRepDlg, toggleCreateRepDlg } = useHomeStore()
+  const { createRepDlg, toggleCreateRepDlg, openRep } = useHomeStore()
 
   return (
     <Grid fluid className="w-full">
@@ -26,7 +26,9 @@ function App(): React.JSX.Element {
             <Button appearance="primary" onClick={toggleCreateRepDlg}>
               Create New Repository
             </Button>
-            <Button appearance="primary">Open Repository</Button>
+            <Button appearance="primary" onClick={openRep}>
+              Open Repository
+            </Button>
             <Button appearance="primary">Clone Repository</Button>
             <Button appearance="primary">Clone Github Repository</Button>
           </VStack>

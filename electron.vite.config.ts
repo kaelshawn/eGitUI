@@ -17,7 +17,8 @@ export default defineConfig({
       rollupOptions: {
         input: {
           home: resolve(__dirname, 'src/renderer/home.html'),
-          empty: resolve(__dirname, 'src/renderer/empty.html')
+          empty: resolve(__dirname, 'src/renderer/empty.html'),
+          repository: resolve(__dirname, 'src/renderer/repository.html')
         }
       }
     }
