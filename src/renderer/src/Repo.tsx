@@ -1,10 +1,98 @@
-import { Col, Grid, Row } from 'rsuite'
+import { Col, Grid, Input, InputGroup, Row, Stack, Tree } from 'rsuite'
+import CollaspedArrowIcon from '@rsuite/icons/CollaspedArrow'
+import BranchIcon from '@rsuite/icons/Branch'
+import GlobalIcon from '@rsuite/icons/Global'
+import SearchIcon from '@rsuite/icons/Search'
+
+const TreeNode = ({ children, ...rest }: { children: React.ReactNode }): React.ReactNode => {
+  return (
+    <div {...rest} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+      {children}
+    </div>
+  )
+}
 
 function Repo(): React.JSX.Element {
+  const data = [
+    {
+      label: 'docs',
+      value: 'docs',
+      children: [
+        {
+          label: 'pages',
+          value: 'pages',
+          children: [
+            {
+              label: 'components',
+              value: 'pages-components',
+              children: [
+                {
+                  label: 'tree',
+                  value: 'pages-tree',
+                  children: [
+                    {
+                      label: 'fragments',
+                      value: 'pages-fragments',
+                      children: [
+                        {
+                          label: 'async',
+                          value: 'pages-async',
+                          children: [
+                            {
+                              label: 'index.tsx',
+                              value: 'pages-index.tsx'
+                            },
+                            {
+                              label: 'styles.css',
+                              value: 'pages-styles.css'
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
   return (
-    <Grid fluid className="w-full">
-      <Row className="w-full">
-        <Col span={4}>test</Col>
+    <Grid fluid className="w-full min-w-400 h-lvh p-2">
+      <Row className="w-full" alignItems="start">
+        <Col span={4}>
+          <Stack spacing={2}>
+            <CollaspedArrowIcon />
+            <BranchIcon></BranchIcon>
+            <GlobalIcon></GlobalIcon>
+          </Stack>
+          <InputGroup>
+            <Input />
+            <InputGroup.Addon>
+              <SearchIcon />
+            </InputGroup.Addon>
+          </InputGroup>
+          <Tree
+            data={data}
+            defaultExpandAll
+            renderTreeNode={(treeNode) => {
+              return (
+                <TreeNode>
+                  {treeNode.icon ? <BranchIcon /> : <GlobalIcon />}
+                  {treeNode.label}
+                </TreeNode>
+              )
+            }}
+            renderTreeIcon={(treeNode, expanded) => {
+              if (treeNode.children) {
+                return expanded ? <CollaspedArrowIcon /> : <CollaspedArrowIcon />
+              }
+              return null
+            }}
+          />
+        </Col>
         <Col span={20}>aa</Col>
       </Row>
     </Grid>
