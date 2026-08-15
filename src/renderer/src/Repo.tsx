@@ -15,46 +15,14 @@ const TreeNode = ({ children, ...rest }: { children: React.ReactNode }): React.R
 function Repo(): React.JSX.Element {
   const data = [
     {
-      label: 'docs',
-      value: 'docs',
+      label: 'Branches',
+      value: 'Branches',
+      icon: <BranchIcon />,
       children: [
         {
-          label: 'pages',
-          value: 'pages',
-          children: [
-            {
-              label: 'components',
-              value: 'pages-components',
-              children: [
-                {
-                  label: 'tree',
-                  value: 'pages-tree',
-                  children: [
-                    {
-                      label: 'fragments',
-                      value: 'pages-fragments',
-                      children: [
-                        {
-                          label: 'async',
-                          value: 'pages-async',
-                          children: [
-                            {
-                              label: 'index.tsx',
-                              value: 'pages-index.tsx'
-                            },
-                            {
-                              label: 'styles.css',
-                              value: 'pages-styles.css'
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          label: 'master',
+          value: 'master',
+          icon: <BranchIcon />
         }
       ]
     }
@@ -80,7 +48,7 @@ function Repo(): React.JSX.Element {
             renderTreeNode={(treeNode) => {
               return (
                 <TreeNode>
-                  {treeNode.icon ? <BranchIcon /> : <GlobalIcon />}
+                  {treeNode.icon ? treeNode.icon : <GlobalIcon />}
                   {treeNode.label}
                 </TreeNode>
               )
