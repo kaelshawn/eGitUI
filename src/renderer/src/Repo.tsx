@@ -3,6 +3,8 @@ import CollaspedArrowIcon from '@rsuite/icons/CollaspedArrow'
 import BranchIcon from '@rsuite/icons/Branch'
 import GlobalIcon from '@rsuite/icons/Global'
 import SearchIcon from '@rsuite/icons/Search'
+import classes from './styles/repo.module.scss'
+import classNames from 'classnames'
 
 const TreeNode = ({ children, ...rest }: { children: React.ReactNode }): React.ReactNode => {
   return (
@@ -61,7 +63,30 @@ function Repo(): React.JSX.Element {
             }}
           />
         </Col>
-        <Col span={20}>aa</Col>
+        <Col span={20}>
+          <div className="flex items-center gap-2 mb-2">
+            <div>
+              <div className={classNames(classes['commit-dot'])}></div>
+            </div>
+            <div>
+              <span className="commit-message">Initial commit</span>
+              <span className="commit-author">John Doe</span>
+              <span className="commit-date">2023-06-01</span>
+              <span className="commit-hash">a1b2c3d</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 mb-2">
+            <div>
+              <div className={classNames(classes['commit-dot'])}></div>
+            </div>
+            <div>
+              <span className="commit-message">Initial commit</span>
+              <span className="commit-author">John Doe</span>
+              <span className="commit-date">2023-06-01</span>
+              <span className="commit-hash">a1b2c3d</span>
+            </div>
+          </div>
+        </Col>
       </Row>
     </Grid>
   )
